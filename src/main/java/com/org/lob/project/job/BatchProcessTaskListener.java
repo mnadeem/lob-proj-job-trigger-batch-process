@@ -1,4 +1,4 @@
-package com.org.lob.job;
+package com.org.lob.project.job;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

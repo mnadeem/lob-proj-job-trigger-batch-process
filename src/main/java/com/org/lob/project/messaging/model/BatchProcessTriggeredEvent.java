@@ -1,4 +1,4 @@
-package com.org.lob.messaging.model;
+package com.org.lob.project.messaging.model;
 
 public class BatchProcessTriggeredEvent {
 

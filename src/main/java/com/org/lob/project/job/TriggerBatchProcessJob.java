@@ -1,12 +1,12 @@
-package com.org.lob.job;
+package com.org.lob.project.job;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import com.org.lob.messaging.BatchProcessTriggeredEventProducer;
-import com.org.lob.messaging.model.BatchProcessTriggeredEvent;
+import com.org.lob.project.messaging.BatchProcessTriggeredEventProducer;
+import com.org.lob.project.messaging.model.BatchProcessTriggeredEvent;
 
 @Component
 public class TriggerBatchProcessJob implements CommandLineRunner {
