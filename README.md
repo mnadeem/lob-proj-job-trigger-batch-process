@@ -1,12 +1,7 @@
 
 
 ````bash
-mvn clean package docker:build
-````
-
-
-````bash
-docker image ls
+mvn clean package
 ````
 
 
