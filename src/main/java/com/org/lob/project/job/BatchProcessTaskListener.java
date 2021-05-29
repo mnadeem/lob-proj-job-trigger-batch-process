@@ -7,7 +7,6 @@ import org.springframework.cloud.task.listener.annotation.BeforeTask;
 import org.springframework.cloud.task.listener.annotation.FailedTask;
 import org.springframework.cloud.task.repository.TaskExecution;
 
-
 public class BatchProcessTaskListener {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(BatchProcessTaskListener.class);
@@ -20,10 +19,15 @@ public class BatchProcessTaskListener {
     @AfterTask
     public void afterTask(TaskExecution taskExecution) {
     	LOGGER.debug("Finished Job `{}`", taskExecution.getTaskName());
+    	if (taskExecution.getExitMessage() == null) {
+            taskExecution.setExitMessage("Success!");
+        }
     }
 
     @FailedTask
     public void failedTask(TaskExecution taskExecution, Throwable throwable) {
-    	LOGGER.error("Error for job `{}`", taskExecution.getTaskName(), throwable);
+    	LOGGER.error("Error for job `{}`: {}", taskExecution.getTaskName(), throwable);
+        taskExecution.setExitMessage("Failed!");
+        taskExecution.setErrorMessage(throwable.getMessage());
     }
 }
