@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3.7.28-management
+    #container_name: rabbitmq
+    volumes:
+        - ./etc/rabbitmq/conf:/etc/rabbitmq/
+        - ./etc/rabbitmq/data/:/var/lib/rabbitmq/
+        - ./etc/rabbitmq/logs/:/var/log/rabbitmq/
+    environment:
+        RABBITMQ_ERLANG_COOKIE: ${RABBITMQ_ERLANG_COOKIE:-secret_cookie}
+        RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER:-admin}
+        RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS:-admin}
+    ports:
+        - 5672:5672    #amqp
+        - 15672:15672  #http
+        - 15692:15692  #prometheus
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 20s
+      retries: 5
+
+  mysql:
+    image: mysql
+    restart: always
+    volumes:
+      - ./etc/mysql/data:/var/lib/mysql
+      - ./etc/mysql/scripts:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mysqldb
+      MYSQL_USER: ${MYSQL_DEFAULT_USER:-testuser}
+      MYSQL_PASSWORD: ${MYSQL_DEFAULT_PASSWORD:-testuser}
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  trigger-batch-process-job:
+    build: .
+    environment:
+      - RMQ_USER=${RABBITMQ_DEFAULT_USER:-admin}
+      - RMQ_PASS=${RABBITMQ_DEFAULT_PASS:-admin}
+      - RMQ_HOST=${RABBITMQ_DEFAULT_HOST:-rabbitmq}
+      - RMQ_PORT=${RABBITMQ_DEFAULT_PORT:-5672}
+      - DB_USER=${MYSQL_DEFAULT_USER:-testuser}
+      - DB_PASS=${MYSQL_DEFAULT_PASSWORD:-testuser}
+      - DB_SERVER=mysql
+      - DB_NAME=mysqldb
+      - DB_PORT=3306
+    depends_on:
+      mysql:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+
