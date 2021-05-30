@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.hierynomus.msfscc.fileinformation.FileIdBothDirectoryInformation;
@@ -16,6 +17,9 @@ import com.org.lob.project.repository.SambaFileRepository;
 
 @Service
 public class DefaultBatchProcessService implements BatchProcessService {
+
+	@Value("${app.local-file-path}")
+	private String localFilePath;
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultBatchProcessService.class);
 
@@ -30,7 +34,6 @@ public class DefaultBatchProcessService implements BatchProcessService {
 	@Override
 	public void process() throws Exception {
 		LOGGER.info("Hello, World!");
-		
 		/**
 		sambaFileRepository.execute(((share) -> {
 			LocalDateTime lastModifiedDate = getLastModifiedDateTime();
@@ -41,8 +44,7 @@ public class DefaultBatchProcessService implements BatchProcessService {
 				eventProducer.sendMessage(newBatchEvent(localFilePath));
 			}));
 			saveLastModifiedDateTime(now);
-		}));
-		**/
+		})); */
 	}
 
 	private BatchProcessEvent newBatchEvent(Path localFilePath) {
@@ -64,8 +66,7 @@ public class DefaultBatchProcessService implements BatchProcessService {
 	}
 
 	private Path localPath(FileIdBothDirectoryInformation fileInfo) {
-		// TODO Auto-generated method stub
-		return null;
+		return Path.of(localFilePath);
 	}
 
 	private void saveLastModifiedDateTime(LocalDateTime now) {

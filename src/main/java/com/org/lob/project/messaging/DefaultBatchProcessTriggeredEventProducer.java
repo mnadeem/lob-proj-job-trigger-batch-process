@@ -18,10 +18,10 @@ public class DefaultBatchProcessTriggeredEventProducer implements BatchProcessTr
 	@Autowired
 	private RabbitTemplate rabbitTemplate;
 
-	@Value("${rabbitmq.batch_process.dg.exchange}")
+	@Value("${rabbitmq.batch-process.dg.exchange}")
 	private String exchangeName;
 
-	@Value("${rabbitmq.batch_process.triggered.routingkey}")
+	@Value("${rabbitmq.batch-process.triggered.routingkey}")
 	private String routingKey;
 
 	@Autowired
