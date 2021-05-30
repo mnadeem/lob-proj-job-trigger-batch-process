@@ -1,17 +1,27 @@
 package com.org.lob.project.repository;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
+import java.util.EnumSet;
 import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import com.hierynomus.msdtyp.AccessMask;
+import com.hierynomus.msfscc.FileAttributes;
 import com.hierynomus.msfscc.fileinformation.FileIdBothDirectoryInformation;
+import com.hierynomus.mssmb2.SMB2CreateDisposition;
+import com.hierynomus.mssmb2.SMB2CreateOptions;
+import com.hierynomus.mssmb2.SMB2ShareAccess;
 import com.hierynomus.smbj.SMBClient;
 import com.hierynomus.smbj.auth.AuthenticationContext;
 import com.hierynomus.smbj.connection.Connection;
 import com.hierynomus.smbj.session.Session;
 import com.hierynomus.smbj.share.DiskShare;
+import com.hierynomus.smbj.share.File;
 
 @Repository
 public class DefaultSambaFileRepository implements SambaFileRepository {
@@ -50,5 +60,21 @@ public class DefaultSambaFileRepository implements SambaFileRepository {
 	public void doForEachModifiedFile(DiskShare share, LocalDateTime lastModifiedDate, Consumer<FileIdBothDirectoryInformation> consumer) {
 		// Get all the files modified after lastModifiedDate
 		// for each file call the consumer.accept(file)
+	}
+
+	@Override
+	public void copySambaFile(DiskShare share, String sambaFile, Path localFilePath) throws Exception {
+		try (File sf = openFile(share, sambaFile)) {
+			Files.copy(sf.getInputStream(), localFilePath, StandardCopyOption.REPLACE_EXISTING);
+		}
+	}
+
+	private File openFile(DiskShare share, String localFilePath) {
+		return share.openFile(localFilePath,
+				EnumSet.of(AccessMask.GENERIC_ALL),
+				EnumSet.of(FileAttributes.FILE_ATTRIBUTE_NORMAL),
+				EnumSet.of(SMB2ShareAccess.FILE_SHARE_READ),
+				SMB2CreateDisposition.FILE_OPEN,
+				EnumSet.of(SMB2CreateOptions.FILE_DIRECTORY_FILE));
 	}
 }
