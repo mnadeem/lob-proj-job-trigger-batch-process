@@ -1,9 +1,5 @@
 package com.org.lob.project.messaging;
 
-
-
-
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -12,7 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.org.lob.project.service.model.BatchProcess;
+import com.org.lob.project.messaging.model.BatchProcessEvent;
 
 @Component
 public class BatchProcessTriggeredEventProducer {
@@ -31,7 +27,7 @@ public class BatchProcessTriggeredEventProducer {
 	@Autowired
 	private ObjectMapper objectMapper;
 
-	public void sendMessage(BatchProcess event) {
+	public void sendMessage(BatchProcessEvent event) {
 		try {
 			String jsonMessage = objectMapper.writeValueAsString(event);
 			rabbitTemplate.convertAndSend(exchangeName, routingKey, jsonMessage);

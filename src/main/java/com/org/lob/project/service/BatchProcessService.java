@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.org.lob.project.messaging.BatchProcessTriggeredEventProducer;
-import com.org.lob.project.service.model.BatchProcess;
+import com.org.lob.project.messaging.model.BatchProcessEvent;
 
 @Service
 public class BatchProcessService {
@@ -20,6 +20,6 @@ public class BatchProcessService {
 
 	public void process() {
 		LOGGER.info("Hello, World!");
-		eventProducer.sendMessage(new BatchProcess());
+		eventProducer.sendMessage(new BatchProcessEvent());
 	}
 }

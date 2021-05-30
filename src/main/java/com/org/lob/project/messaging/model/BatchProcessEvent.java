@@ -1,6 +1,6 @@
-package com.org.lob.project.service.model;
+package com.org.lob.project.messaging.model;
 
-public class BatchProcess {
+public class BatchProcessEvent {
 
 	private Long id;
 
