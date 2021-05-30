@@ -16,6 +16,11 @@
         <mapEntry key="RMQ_PASS" value="admin"/>
         <mapEntry key="RMQ_PORT" value="5672"/>
         <mapEntry key="RMQ_USER" value="admin"/>
+        <mapEntry key="SMB_DOMAIN" value="ms"/>
+        <mapEntry key="SMB_NAME" value="share"/>
+        <mapEntry key="SMB_PASSWORD" value="password"/>
+        <mapEntry key="SMB_SERVER" value="localhost"/>
+        <mapEntry key="SMB_USER" value="user"/>
     </mapAttribute>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
