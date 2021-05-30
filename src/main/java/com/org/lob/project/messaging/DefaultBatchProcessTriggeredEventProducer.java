@@ -30,6 +30,7 @@ public class DefaultBatchProcessTriggeredEventProducer implements BatchProcessTr
 	@Override
 	public void sendMessage(BatchProcessEvent event) {
 		try {
+			LOGGER.trace("Sending message: {} to {} ", event, routingKey);
 			String jsonMessage = objectMapper.writeValueAsString(event);
 			rabbitTemplate.convertAndSend(exchangeName, routingKey, jsonMessage);
 			LOGGER.debug("Sent message for {} ", routingKey);

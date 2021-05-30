@@ -53,6 +53,11 @@ services:
       - DB_SERVER=mysql
       - DB_NAME=mysqldb
       - DB_PORT=3306
+      - SMB_SERVER=server
+      - SMB_USER=USER
+      - SMB_PASSWORD=PASSWORD
+      - SMB_DOMAIN=MS
+      - SMB_NAME=name
     depends_on:
       mysql:
         condition: service_healthy

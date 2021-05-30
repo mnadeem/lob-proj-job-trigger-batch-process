@@ -9,7 +9,7 @@ import com.org.lob.project.job.BatchProcessTaskListener;
 public class TaskConfig {
 
 	@Bean
-	public BatchProcessTaskListener taskListener() {
+	BatchProcessTaskListener taskListener() {
 	    return new BatchProcessTaskListener();
 	}
 
