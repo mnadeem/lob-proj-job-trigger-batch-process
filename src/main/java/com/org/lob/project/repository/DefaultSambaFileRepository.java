@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.hierynomus.msdtyp.AccessMask;
-import com.hierynomus.msfscc.FileAttributes;
 import com.hierynomus.msfscc.fileinformation.FileIdBothDirectoryInformation;
 import com.hierynomus.mssmb2.SMB2CreateDisposition;
-import com.hierynomus.mssmb2.SMB2CreateOptions;
 import com.hierynomus.mssmb2.SMB2ShareAccess;
 import com.hierynomus.smbj.SMBClient;
 import com.hierynomus.smbj.auth.AuthenticationContext;
@@ -71,10 +69,10 @@ public class DefaultSambaFileRepository implements SambaFileRepository {
 
 	private File openFileForRead(DiskShare share, String localFilePath) {
 		return share.openFile(localFilePath,
-				EnumSet.of(AccessMask.GENERIC_ALL),
-				EnumSet.of(FileAttributes.FILE_ATTRIBUTE_NORMAL),
-				EnumSet.of(SMB2ShareAccess.FILE_SHARE_READ),
+				EnumSet.of(AccessMask.GENERIC_READ),
+				null,
+				SMB2ShareAccess.ALL,
 				SMB2CreateDisposition.FILE_OPEN,
-				EnumSet.of(SMB2CreateOptions.FILE_DIRECTORY_FILE));
+				null);
 	}
 }
