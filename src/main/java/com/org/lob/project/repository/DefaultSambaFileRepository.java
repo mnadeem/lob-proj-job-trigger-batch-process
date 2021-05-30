@@ -64,12 +64,12 @@ public class DefaultSambaFileRepository implements SambaFileRepository {
 
 	@Override
 	public void copySambaFile(DiskShare share, String sambaFile, Path localFilePath) throws Exception {
-		try (File sf = openFile(share, sambaFile)) {
+		try (File sf = openFileForRead(share, sambaFile)) {
 			Files.copy(sf.getInputStream(), localFilePath, StandardCopyOption.REPLACE_EXISTING);
 		}
 	}
 
-	private File openFile(DiskShare share, String localFilePath) {
+	private File openFileForRead(DiskShare share, String localFilePath) {
 		return share.openFile(localFilePath,
 				EnumSet.of(AccessMask.GENERIC_ALL),
 				EnumSet.of(FileAttributes.FILE_ATTRIBUTE_NORMAL),

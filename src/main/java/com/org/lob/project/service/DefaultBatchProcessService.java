@@ -42,8 +42,7 @@ public class DefaultBatchProcessService implements BatchProcessService {
 			}));
 			saveLastModifiedDateTime(now);
 		}));
-		
-		*/
+		**/
 	}
 
 	private BatchProcessEvent newBatchEvent(Path localFilePath) {
