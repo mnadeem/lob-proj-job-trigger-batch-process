@@ -11,7 +11,6 @@ public class TriggerBatchProcessJob implements CommandLineRunner {
 	private BatchProcessService batchProcessService;
 
 	public TriggerBatchProcessJob(BatchProcessService batchProcessService) {
-		super();
 		this.batchProcessService = batchProcessService;
 	}
 
