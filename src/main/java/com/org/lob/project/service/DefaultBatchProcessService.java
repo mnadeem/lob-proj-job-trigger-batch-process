@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.hierynomus.msfscc.fileinformation.FileIdBothDirectoryInformation;
 import com.hierynomus.smbj.share.DiskShare;
-import com.org.lob.function.Throwing;
 import com.org.lob.project.messaging.BatchProcessTriggeredEventProducer;
 import com.org.lob.project.messaging.model.BatchProcessEvent;
 import com.org.lob.project.repository.SambaFileRepository;
+import com.org.lob.support.function.Throwing;
 
 @Service
 public class DefaultBatchProcessService implements BatchProcessService {
@@ -34,7 +34,7 @@ public class DefaultBatchProcessService implements BatchProcessService {
 	@Override
 	public void process() throws Exception {
 		LOGGER.info("Hello, World!");
-		/**
+
 		sambaFileRepository.execute(((share) -> {
 			LocalDateTime lastModifiedDate = getLastModifiedDateTime();
 			LocalDateTime now = LocalDateTime.now();
@@ -44,7 +44,7 @@ public class DefaultBatchProcessService implements BatchProcessService {
 				eventProducer.sendMessage(newBatchEvent(localFilePath));
 			}));
 			saveLastModifiedDateTime(now);
-		})); */
+		}));
 	}
 
 	private BatchProcessEvent newBatchEvent(Path localFilePath) {

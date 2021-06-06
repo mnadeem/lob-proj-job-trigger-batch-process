@@ -1,4 +1,4 @@
-package com.org.lob.function;
+package com.org.lob.support.function;
 
 import java.util.function.Consumer;
 
