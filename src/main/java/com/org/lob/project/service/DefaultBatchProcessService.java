@@ -1,6 +1,7 @@
 package com.org.lob.project.service;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
@@ -66,7 +67,7 @@ public class DefaultBatchProcessService implements BatchProcessService {
 	}
 
 	private Path localPath(FileIdBothDirectoryInformation fileInfo) {
-		return Path.of(localFilePath);
+		return Paths.get(localFilePath);
 	}
 
 	private void saveLastModifiedDateTime(LocalDateTime now) {
