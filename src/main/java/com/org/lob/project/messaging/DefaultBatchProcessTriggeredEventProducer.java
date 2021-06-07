@@ -3,7 +3,6 @@ package com.org.lob.project.messaging;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +14,8 @@ public class DefaultBatchProcessTriggeredEventProducer implements BatchProcessTr
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultBatchProcessTriggeredEventProducer.class);
 
-	@Autowired
-	private RabbitTemplate rabbitTemplate;
+	private final RabbitTemplate rabbitTemplate;
+	private final ObjectMapper objectMapper;
 
 	@Value("${rabbitmq.batch-process.dg.exchange}")
 	private String exchangeName;
@@ -24,8 +23,10 @@ public class DefaultBatchProcessTriggeredEventProducer implements BatchProcessTr
 	@Value("${rabbitmq.batch-process.triggered.routingkey}")
 	private String routingKey;
 
-	@Autowired
-	private ObjectMapper objectMapper;
+	public DefaultBatchProcessTriggeredEventProducer(RabbitTemplate rabbitTemplate, ObjectMapper objectMapper) {
+		this.rabbitTemplate = rabbitTemplate;
+		this.objectMapper = objectMapper;
+	}
 
 	@Override
 	public void sendMessage(BatchProcessEvent event) {

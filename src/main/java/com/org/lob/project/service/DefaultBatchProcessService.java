@@ -24,8 +24,8 @@ public class DefaultBatchProcessService implements BatchProcessService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DefaultBatchProcessService.class);
 
-	private BatchProcessTriggeredEventProducer eventProducer;
-	private SambaFileRepository sambaFileRepository;
+	private final BatchProcessTriggeredEventProducer eventProducer;
+	private final SambaFileRepository sambaFileRepository;
 
 	public DefaultBatchProcessService(BatchProcessTriggeredEventProducer eventProducer, SambaFileRepository sambaFileRepository) {
 		this.eventProducer = eventProducer;
